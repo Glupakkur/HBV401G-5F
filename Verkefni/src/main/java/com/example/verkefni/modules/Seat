@@ -1,1 +1,26 @@
-public Seat{}
+public class Seat {
+  private String seatID;
+  Private boolean available;
+  Private boolean emergencyExit;
+
+ //**Constructor method. A seat consists of an ID, availability, and a flag for emergency seats. constructing requires a seat Id and an emergency flag, if flag is not given the emergency defaults to false. Availability alwasy starts out as true**//
+  public Seat (string ID, boolean emergency){
+    this.seatID = ID;
+    this.available = true;
+    this.emergencyExit = emergency;
+    }  
+    
+ // Methods   
+ public booelan isAvailable(){
+   return this.available;
+   }
+ public void setAvailable(boolean flag){
+  this.available = flag;
+   }
+ public boolean isEmergency(){
+   return this.emergencyExit;
+   }
+public String seatID(){
+  return this.seatID;
+   }
+}
