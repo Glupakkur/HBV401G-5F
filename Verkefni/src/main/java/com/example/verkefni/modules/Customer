@@ -6,6 +6,7 @@ public class Customer {
   private final String lastName;
   private final String phone;
   private final String email;
+  private
 
   public Customer(Sex sex, Localdate DoB, String firstName, String lastName, String phone, String email){
     this.sex = sex
