@@ -1,4 +1,5 @@
-import modules.Flight;
+package com.example.verkefni;
+import com.example.verkefni.modules.Flight;
 
 import java.time.LocalDateTime;
 

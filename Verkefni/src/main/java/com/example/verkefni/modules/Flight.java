@@ -1,4 +1,4 @@
-package modules;
+package com.example.verkefni.modules;
 
 import java.time.LocalDateTime;
 

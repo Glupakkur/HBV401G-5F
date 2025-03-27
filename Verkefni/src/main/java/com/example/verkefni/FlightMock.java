@@ -1,4 +1,6 @@
-import modules.Flight;
+package com.example.verkefni;
+
+import com.example.verkefni.modules.Flight;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Random;

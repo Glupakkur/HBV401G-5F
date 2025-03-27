@@ -1,4 +1,4 @@
-package modules;
+package com.example.verkefni.modules;
 
 public class Seat {
     private String seatID;
