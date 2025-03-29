@@ -27,11 +27,12 @@ public class Flight {
         seats = new Seat[seatCount];
 
         char letter = 'A';
-        for(int i = 0; i < seatCount / 4; i++){
-            letter++;
-            for(int j = 0; j < 4; j++){
+        for (int i = 0; i < seatCount / 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 seats[i * 4 + j] = new Seat(letter + Integer.toString(j + 1), false);
-        }}
+            }
+            letter++;
+        }
     }
     public Flight () {
 
