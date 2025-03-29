@@ -14,24 +14,26 @@ public class Flight {
     private Ticket[] tickets;
 
     public Flight(String flightID, String airline, LocalDateTime departureTime, LocalDateTime arrivalTime,
-                  String departureLocation, String arrivalLocation, int seatCount){
-        this.flightID =flightID;
+                  String departureLocation, String arrivalLocation, int seatCount) {
+        this.flightID = flightID;
         this.airline = airline;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
-        emptyseatscount=seatCount;
+
+        emptyseatscount = seatCount;
         tickets = new Ticket[seatCount];
         seats = new Seat[seatCount];
+
         char letter = 'A';
-        for(int i=0; i<seatCount/4;i++){
+        for(int i = 0; i < seatCount / 4; i++){
             letter++;
-            for(int j=0; j<4; j++){
-                seats[i*4 + j] = new Seat(letter + Integer.toString(j+1), false);
+            for(int j = 0; j < 4; j++){
+                seats[i * 4 + j] = new Seat(letter + Integer.toString(j + 1), false);
         }}
     }
-    public Flight (){
+    public Flight () {
 
     }
 
@@ -39,7 +41,7 @@ public class Flight {
     boolean hasEmptySeat(){
         return emptyseatscount > 0;
     }
-    void updateSeatCount(){
+    void updateSeatCount() {
         if (hasEmptySeat()) emptyseatscount--;
         else throw new RuntimeException("Seats are full");
     }
@@ -70,6 +72,6 @@ public class Flight {
     public void initTicketsAndSeats(int num) {
         this.tickets = new Ticket[num];
         this.seats = new Seat[num];
-        emptyseatscount=num;
+        emptyseatscount = num;
     }
 }
