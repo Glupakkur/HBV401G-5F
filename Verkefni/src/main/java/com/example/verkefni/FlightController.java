@@ -2,8 +2,9 @@ package com.example.verkefni;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modules.Flight;
+
 import java.util.ArrayList;
+import modules.Flight;
 
 public class FlightController {
     private Flight[] flights;
