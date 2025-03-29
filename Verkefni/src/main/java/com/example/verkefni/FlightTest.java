@@ -1,4 +1,5 @@
 import modules.Flight;
+import modules.FlightMock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,10 +44,11 @@ public class FlightTest {
 
     @Test
     void testUpdateSeatCount() {
-        int initialSeatCount = flight.getEmptySeatCount();
+        int initialSeatCount = flight.getEmptySeatsCount();
 
         flight.updateSeatCount();
-        assertEquals(initialSeatCount - 1, flight.getEmptySeatCount(), "Empty seat count should decrease by 1 after reserving 1 seat.");
+
+        assertEquals(initialSeatCount - 1, flight.getEmptySeatsCount(), "Empty seat count should decrease by 1 after reserving 1 seat.");
     }
 
     @Test
@@ -62,8 +64,8 @@ public class FlightTest {
     void testSeatGeneration() {
         Seat[] seats = flight.getSeats();
 
-        assertEquals("A1", seats[0].getSeatID(), "First seat ID should be A1");
-        assertEquals("C4", seats[11].getSeatID(), "12th seat ID should be C4");
+        assertEquals("A1", seats[0].getSeatID(), "First seat ID should be A1.");
+        assertEquals("C4", seats[11].getSeatID(), "12th seat ID should be C4.");
     }
 
     @Test
@@ -76,6 +78,7 @@ public class FlightTest {
 
         for (int i = 0; i < flightMock.mock.length; i++) {
             Flight flight = flightMock.mock[i];
+
             assertNotNull(flight.getDepartureLocation(), "Departure location should not be null.");
             assertNotNull(flight.getArrivalLocation(), "Arrival location should not be null.");
         }
