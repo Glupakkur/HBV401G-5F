@@ -6,12 +6,40 @@ public class Ticket {
     private Flight flight;
     private int extraBaggage;
 
-    public Ticket(Customer customer, String seatID, Flight flight, int extrabaggge){
+    public Ticket(Customer customer, String seatID, Flight flight, int extraBaggage){
         this.ticketID = (flight.getFlightID()) + seatID;
         this.ticketHolder = customer;
         this.seatID = seatID;
         this.flight = flight;
-        this.extraBaggage= extrabaggge;
+        this.extraBaggage = extraBaggage;
     }
 
+    public void cancelTicket() {
+        this.ticketHolder = null;
+        this.seatID = null;
+        this.flight = null;
+        this.extraBaggage = 0;
+    }
+
+    public void addExtraBaggage(int weight) {
+        this.extraBaggage += weight;
+    }
+
+
+    // Getters
+    public String getTicketID() {
+        return ticketID;
+    }
+
+    public Customer getHolder() {
+        return ticketHolder;
+    }
+
+    public getFlight() {
+        return flight;
+    }
+
+    public String getSeat() {
+        return seatID;
+    }
 }
