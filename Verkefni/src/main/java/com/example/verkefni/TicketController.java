@@ -1,8 +1,6 @@
 package com.example.verkefni;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
 import modules.Customer;
 import modules.Flight;
 import modules.Seat;
@@ -12,7 +10,8 @@ public class TicketController {
     private static final int TICKET_LIMIT = 20;
     private Ticket[] tickets;
     private int userTicketCount;
-
+  
+    //TODO: insert correct FXML connectors
     @FXML
     private Label welcomeText;
 

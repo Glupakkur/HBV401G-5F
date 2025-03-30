@@ -1,11 +1,11 @@
+package com.example.verkefni;
+import com.example.verkefni.modules.Flight;
 import modules.Flight;
 import modules.FlightMock;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 
 public class FlightTest {

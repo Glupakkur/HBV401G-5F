@@ -1,5 +1,4 @@
-package modules;
-
+package com.example.verkefni.modules;
 public class Ticket {
     private String ticketID;
     private Customer ticketHolder;
