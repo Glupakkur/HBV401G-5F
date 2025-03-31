@@ -75,4 +75,10 @@ public class Flight {
         this.seats = new Seat[num];
         emptyseatscount = num;
     }
+
+
+    @Override
+    public String toString() {
+        return departureLocation + " → " + arrivalLocation;
+    }
 }
