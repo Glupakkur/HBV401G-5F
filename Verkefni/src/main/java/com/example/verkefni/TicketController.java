@@ -1,10 +1,10 @@
 package com.example.verkefni;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modules.Customer;
-import modules.Flight;
-import modules.Seat;
-import modules.Ticket;
+import com.example.verkefni.modules.Customer;
+import com.example.verkefni.modules.Flight;
+import com.example.verkefni.modules.Seat;
+import com.example.verkefni.modules.Ticket;
 
 public class TicketController {
     private static final int TICKET_LIMIT = 20;

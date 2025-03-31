@@ -1,12 +1,9 @@
 package com.example.verkefni;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 import java.util.ArrayList;
-import modules.Flight;
+import com.example.verkefni.modules.Flight;
 
-public class FlightController {
+public class FlightController1 {
     private Flight[] flights;
     private Flight selectedFlight;
 
@@ -34,7 +31,9 @@ public class FlightController {
 
     // Update the remaining seats of a given flight.
     public void updateRemainingSeats(Flight f, int seatsUsed) {
-        f.updateSeatCount(seatsUsed);
+        for (int i = 0; i < seatsUsed; i++) {
+            f.updateSeatCount();
+        }
     }
 
     // Select a flight chosen by the user.
@@ -42,4 +41,7 @@ public class FlightController {
         this.selectedFlight = f;
     }
 
+    public Flight getSelectedFlight() {
+        return selectedFlight;
+    }
 }

@@ -6,6 +6,10 @@ import java.time.Month;
 import java.util.Random;
 
 public class FlightMock {
+    public Flight[] getMock() {
+        return mock;
+    }
+
     Flight[] mock;
     public FlightMock(int flightCount){
         mock = new Flight[flightCount];

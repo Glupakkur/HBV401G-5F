@@ -1,6 +1,6 @@
-import modules.Flight;
-import modules.FlightMock;
-import controllers.FlightController;
+import com.example.verkefni.modules.Flight;
+import com.example.verkefni.FlightMock;
+import com.example.verkefni.FlightController1;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,14 +8,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class FlightControllerTest {
-    private FlightController flightController;
+    private FlightController1 flightController;
     private Flight[] flights;
 
     @BeforeEach
     void setup() {
-        flightController = new FlightController();
+        flightController = new FlightController1();
         FlightMock flightMock = new FlightMock(10);
-        flights = flightMock.mock;
+        flights = flightMock.getMock();
         flightController.setFlights(flights);
     }
 

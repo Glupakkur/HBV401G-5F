@@ -1,6 +1,6 @@
 package database;
 
-import modules.Flight;
+import com.example.verkefni.modules.Flight;
 
 import java.sql.*;
 import java.util.ArrayList;

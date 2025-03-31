@@ -1,9 +1,9 @@
 package com.example.verkefni;
 
-import modules.Flight;
+import com.example.verkefni.modules.Flight;
 import database.FlightDB;
 
-public class FlightController {
+class FlightController {
     private FlightDB flightDB;
     private Flight selectedFlight;
 
@@ -28,7 +28,9 @@ public class FlightController {
 
     // Update seat count logic (if managed locally)
     public void updateRemainingSeats(Flight f, int seatsUsed) {
-        f.updateSeatCount(seatsUsed); // still local
+        for (int i = 0; i < seatsUsed; i++) {
+            f.updateSeatCount();
+        } // still local
         // You can optionally update DB here too
     }
 

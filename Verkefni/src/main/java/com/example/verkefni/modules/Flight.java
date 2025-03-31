@@ -39,10 +39,10 @@ public class Flight {
     }
 
 
-    boolean hasEmptySeat(){
+    public boolean hasEmptySeat(){
         return emptyseatscount > 0;
     }
-    void updateSeatCount() {
+   public void updateSeatCount() {
         if (hasEmptySeat()) emptyseatscount--;
         else throw new RuntimeException("Seats are full");
     }

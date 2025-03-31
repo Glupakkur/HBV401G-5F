@@ -3,7 +3,14 @@ public class Ticket {
     private String ticketID;
     private Customer ticketHolder;
     private String seatID;
+
+
     private Flight flight;
+
+    public int getExtraBaggage() {
+        return extraBaggage;
+    }
+
     private int extraBaggage;
 
     public Ticket(Customer customer, String seatID, Flight flight, int extraBaggage){
@@ -35,7 +42,7 @@ public class Ticket {
         return ticketHolder;
     }
 
-    public getFlight() {
+    public Flight getFlight() {
         return flight;
     }
 
