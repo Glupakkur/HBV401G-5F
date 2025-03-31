@@ -1,6 +1,7 @@
 package com.example.verkefni.modules;
+import javafx.scene.layout.StackPane;
 
-public class Seat {
+public class Seat  extends StackPane{
     private String seatID;
     private boolean available;
     private boolean emergencyExit;
