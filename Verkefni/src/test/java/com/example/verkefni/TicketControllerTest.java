@@ -1,10 +1,9 @@
-// Prófun á TicketController – staðfestir að miði er búinn til rétt og sæti verði frátekið
+package com.example.verkefni;// Prófun á TicketController – staðfestir að miði er búinn til rétt og sæti verði frátekið
 // Prófar einnig aukatöskur og jaðartilvik eins og þegar sæti er tekið
 import com.example.verkefni.modules.Flight;
 import com.example.verkefni.modules.Seat;
 import com.example.verkefni.modules.Customer;
 import com.example.verkefni.modules.Ticket;
-import com.example.verkefni.TicketController;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

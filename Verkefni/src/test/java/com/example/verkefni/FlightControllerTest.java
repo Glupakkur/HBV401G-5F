@@ -1,6 +1,6 @@
+package com.example.verkefni;
+
 import com.example.verkefni.modules.Flight;
-import com.example.verkefni.FlightMock;
-import com.example.verkefni.FlightController1;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;

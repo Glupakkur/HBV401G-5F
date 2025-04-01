@@ -14,7 +14,7 @@ public class FlugVidmotApplication extends Application {
         //Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         Scene scene = new Scene(new Pane());
         ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.VELJAFLUG);
+        ViewSwitcher.switchTo(View.SEATMAP);
         stage.setTitle("Seat map");
         stage.setScene(scene);
         stage.show();

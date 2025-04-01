@@ -1,21 +1,19 @@
 package com.example.verkefni;
+
 import com.example.verkefni.modules.Flight;
-import com.example.verkefni.modules.Flight;
-import com.example.verkefni.FlightMock;
+import com.example.verkefni.modules.Seat;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
-import com.example.verkefni.modules.Seat;
-
 
 public class FlightTest {
     private Flight flight;
 
     @BeforeEach
-    void setup(){
-        flight = new Flight("testID","foobar Express",
+    void setup() {
+        flight = new Flight("testID", "foobar Express",
                 FlightMock.generateRandomDateTime(1999),
                 FlightMock.generateRandomDateTime(1999),
                 "foosville",
@@ -24,7 +22,7 @@ public class FlightTest {
     }
 
     @AfterEach
-    public void teardown(){
+    public void teardown() {
         flight = null;
     }
 
@@ -36,20 +34,16 @@ public class FlightTest {
     @Test
     void testHasEmptySeatWhenFull() {
         int seatcount = flight.getEmptySeatsCount();
-
         for (int i = 0; i < seatcount; i++) {
             flight.updateSeatCount();
         }
-
         assertFalse(flight.hasEmptySeat(), "After using all seats, this flight should not have any empty seats.");
     }
 
     @Test
     void testUpdateSeatCount() {
         int initialSeatCount = flight.getEmptySeatsCount();
-
         flight.updateSeatCount();
-
         assertEquals(initialSeatCount - 1, flight.getEmptySeatsCount(), "Empty seat count should decrease by 1 after reserving 1 seat.");
     }
 
@@ -58,14 +52,13 @@ public class FlightTest {
         while (flight.hasEmptySeat()) {
             flight.updateSeatCount();
         }
-
         assertThrows(RuntimeException.class, flight::updateSeatCount, "Exception not thrown when all seats are taken.");
     }
 
     @Test
     void testSeatGeneration() {
         Seat[] seats = flight.getSeats();
-
+        assertTrue(seats.length > 11, "There should be at least 12 seats to test seat #12.");
         assertEquals("A1", seats[0].getSeatID(), "First seat ID should be A1.");
         assertEquals("C4", seats[11].getSeatID(), "12th seat ID should be C4.");
     }
@@ -74,15 +67,12 @@ public class FlightTest {
     void testProperFlightGeneration() {
         int flightCount = 10;
         FlightMock flightMock = new FlightMock(flightCount);
-
-        assertNotNull(flightMock.mock, "The 'mock' array should not be null.");
-        assertEquals(flightCount, flightMock.mock.length, "The number of flights does not match.");
-
-        for (int i = 0; i < flightMock.mock.length; i++) {
-            Flight flight = flightMock.mock[i];
-
-            assertNotNull(flight.getDepartureLocation(), "Departure location should not be null.");
-            assertNotNull(flight.getArrivalLocation(), "Arrival location should not be null.");
+        Flight[] mocks = flightMock.getMock();
+        assertNotNull(mocks, "The 'mock' array should not be null.");
+        assertEquals(flightCount, mocks.length, "The number of flights does not match.");
+        for (Flight f : mocks) {
+            assertNotNull(f.getDepartureLocation(), "Departure location should not be null.");
+            assertNotNull(f.getArrivalLocation(), "Arrival location should not be null.");
         }
     }
 
@@ -98,7 +88,6 @@ public class FlightTest {
         assertEquals(20, flight.getTickets().length, "The ticket array length should match the seat count.");
     }
 
-    // Test the getters.
     @Test
     void testGetterValues() {
         assertEquals("testID", flight.getFlightID(), "Flight ID does not match.");

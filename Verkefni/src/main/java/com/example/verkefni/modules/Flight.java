@@ -33,6 +33,8 @@ public class Flight {
             }
             letter++;
         }
+
+
     }
     public Flight () {
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@com/example/verkefni/vidmot/styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.verkefni.vidmot.SaetiController" styleClass="cabin-background">
+
+    <!-- ScrollPane wraps the HBox to allow scrolling -->
+    <ScrollPane fitToWidth="true" fitToHeight="true" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+                AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
+        <content>
+            <HBox alignment="CENTER" spacing="10.0">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+
+                <!-- Left GridPane -->
+                <GridPane fx:id="myGridPane">
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <HBox.margin>
+                        <Insets left="10" right="10"/>
+                    </HBox.margin>
+                </GridPane>
+
+                <!-- Right GridPane -->
+                <GridPane fx:id="myGridPane2">
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <HBox.margin>
+                        <Insets left="10" right="10"/>
+                    </HBox.margin>
+                </GridPane>
+
+            </HBox>
+        </content>
+    </ScrollPane>
+
+    <!-- Label for displaying seat information -->
+    <Label fx:id="welcomeText" alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0" />
+
+</AnchorPane>

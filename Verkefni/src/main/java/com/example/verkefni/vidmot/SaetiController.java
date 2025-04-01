@@ -1,13 +1,15 @@
 package com.example.verkefni.vidmot;
 
-import com.example.verkefni.modules.Seat
+import com.example.verkefni.modules.Flight;
+import com.example.verkefni.FlightMock;
+import com.example.verkefni.modules.Seat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-
 public class SaetiController {
+
     @FXML
     private Label welcomeText;
     @FXML
@@ -15,9 +17,44 @@ public class SaetiController {
     @FXML
     private GridPane myGridPane2;
 
+    private static final int COLUMNS_PER_SIDE = 2;
 
-    private static final int ROWS = 30; // Number of rows in the plane
-    private static final int COLUMNS = 3; // Seats per side
+    private void populateSeatsFromFlight(Flight flight) {
+        int added = 0;
+
+        for (Seat seat : flight.getSeats()) {
+            String id = seat.getSeatID();
+
+            if (id == null || id.length() < 2) continue;
+
+            char rowChar = id.charAt(0);
+            int row = rowChar - 'A';
+
+            int seatNum;
+            try {
+                seatNum = Integer.parseInt(id.substring(1)) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Skipping malformed seat ID: " + id);
+                continue;
+            }
+
+            GridPane grid = seatNum < 2 ? myGridPane : myGridPane2;
+            int col = seatNum % 2;
+
+            seat.setPrefSize(40, 40);
+            seat.setStyle("-fx-border-color: black; -fx-background-color: lightcoral;");
+            setupSeat(seat);
+            System.out.println("Adding seat " + seat.getSeatID() + " to " + (grid == myGridPane ? "LEFT" : "RIGHT") + " at row " + row + ", col " + col);
+
+            grid.add(seat, col, row);
+            added++;
+        }
+        System.out.println("Flight seat count: " + flight.getSeats().length);
+        System.out.println("Seats added to grid: " + added);
+
+        System.out.println("Added " + added + " seats from flight.");
+    }
+
 
     @FXML
     public void initialize() {
@@ -25,27 +62,42 @@ public class SaetiController {
         myGridPane.setHgap(2);
         myGridPane2.setVgap(1);
         myGridPane2.setHgap(2);
-        myGridPane.setPrefSize((COLUMNS * 30), (ROWS * 30));
-        myGridPane2.setPrefSize((COLUMNS * 30), (ROWS * 30));
+        myGridPane.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
+        myGridPane2.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
 
-        populateSeats();
+        // Use a mock flight to test
+        Flight mockFlight = new FlightMock(1).getMock()[0];
+        populateSeatsFromFlight(mockFlight);
+    }
+
+    private void setupSeat(Seat seat) {
+        seat.setPrefSize(25, 25);
+
+        seat.getStyleClass().removeAll("greenseat", "redseat", "emergencyseat");
+        if (seat.isAvailable()) {
+            seat.getStyleClass().add("greenseat");
+        } else {
+            seat.getStyleClass().add("redseat");
+        }
+
+        if (seat.isEmergency()) {
+            seat.getStyleClass().add("emergencyseat");
+        }
+
+        seat.setOnMouseEntered(this::tellMe);
+        seat.setOnMouseClicked(this::clickseat);
     }
 
     @FXML
     public void tellMe(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
-        String seatInfo = source.getSeatID().toString();
-        if (source.isAvailable()){
-            seatInfo += " is available";
-        }
-        if(!source.isAvailable()){
-            seatInfo += " is unavailable";
-        }
+        StringBuilder seatInfo = new StringBuilder(source.getSeatID());
 
-        if (source.isEmergency()){
-            seatInfo += " and is an Emergency Exit";
-        }
+        seatInfo.append(source.isAvailable() ? " is available" : " is unavailable");
 
+        if (source.isEmergency()) {
+            seatInfo.append(" and is an Emergency Exit");
+        }
 
         welcomeText.setText("Seat number: " + seatInfo);
     }
@@ -53,42 +105,7 @@ public class SaetiController {
     public void clickseat(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
         source.setAvailable(!source.isAvailable());
-        source.getStyleClass().removeAll("redseat", "greenseat");
-        if (source.isAvailable()) {
-            source.getStyleClass().add("greenseat");
-        } else {
-            source.getStyleClass().add("redseat");
-        }
 
-    }
-
-
-    private void populateSeats() {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
-                addSeat(myGridPane, row, col, "L" + (row + 1) + (char) ('A' + col));
-
-                addSeat(myGridPane2, row, col, "R" + (row + 1) + (char) ('D' + col));
-            }
-        }
-    }
-
-    private void addSeat(GridPane gridPane, int row, int col, String seatNumber) {
-        Seat seat = new Seat();
-        seat.setPrefSize(25, 25);
-
-        seat.getStyleClass().add(seatNumber);
-        if (seat.isAvailable())
-        {
-            seat.getStyleClass().add("greenseat");
-        }
-        else
-        {
-            seat.getStyleClass().add("redseat");
-        }
-
-        seat.setOnMouseEntered(this::tellMe);
-        seat.setOnMouseClicked(this::clickseat);
-        gridPane.add(seat, col, row);
+        setupSeat(source); // Reapply styles
     }
 }
