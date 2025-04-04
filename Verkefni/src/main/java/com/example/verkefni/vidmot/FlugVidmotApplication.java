@@ -10,12 +10,10 @@ import java.io.IOException;
 public class FlugVidmotApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //FXMLLoader fxmlLoader = new FXMLLoader(SaetiApplication.class.getResource("saeti-view.fxml"));
-        //Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         Scene scene = new Scene(new Pane());
         ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.SEATMAP);
-        stage.setTitle("Seat map");
+        ViewSwitcher.switchTo(View.VELJAFLUG);
+        stage.setTitle("Flightbooker Extreme");
         stage.setScene(scene);
         stage.show();
     }

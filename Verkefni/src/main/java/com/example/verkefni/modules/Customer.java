@@ -3,6 +3,34 @@ package com.example.verkefni.modules;
 import java.time.LocalDate;
 
 public class Customer {
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     private final LocalDate dateOfBirth;
     private final String sex;
     private final String nationality;

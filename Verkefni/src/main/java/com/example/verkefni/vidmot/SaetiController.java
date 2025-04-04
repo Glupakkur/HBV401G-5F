@@ -3,6 +3,7 @@ package com.example.verkefni.vidmot;
 import com.example.verkefni.modules.Flight;
 import com.example.verkefni.FlightMock;
 import com.example.verkefni.modules.Seat;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,10 +18,12 @@ public class SaetiController {
     @FXML
     private GridPane myGridPane2;
 
+    private Flight selectedFlight;
+
     private static final int COLUMNS_PER_SIDE = 2;
 
     private void populateSeatsFromFlight(Flight flight) {
-        int added = 0;
+
 
         for (Seat seat : flight.getSeats()) {
             String id = seat.getSeatID();
@@ -42,17 +45,14 @@ public class SaetiController {
             int col = seatNum % 2;
 
             seat.setPrefSize(40, 40);
-            seat.setStyle("-fx-border-color: black; -fx-background-color: lightcoral;");
             setupSeat(seat);
-            System.out.println("Adding seat " + seat.getSeatID() + " to " + (grid == myGridPane ? "LEFT" : "RIGHT") + " at row " + row + ", col " + col);
 
             grid.add(seat, col, row);
-            added++;
-        }
-        System.out.println("Flight seat count: " + flight.getSeats().length);
-        System.out.println("Seats added to grid: " + added);
 
-        System.out.println("Added " + added + " seats from flight.");
+        }
+
+
+
     }
 
 
@@ -67,7 +67,17 @@ public class SaetiController {
 
         // Use a mock flight to test
         Flight mockFlight = new FlightMock(1).getMock()[0];
-        populateSeatsFromFlight(mockFlight);
+        selectedFlight = DataHolder.getFlight();
+        if (selectedFlight != null) {
+            populateSeatsFromFlight(selectedFlight);
+        } else {
+            welcomeText.setText("No flight selected.");
+        }
+    }
+
+    @FXML
+    private void onChooseFlightClick() {
+        ViewSwitcher.switchTo(View.VELJAFLUG);
     }
 
     private void setupSeat(Seat seat) {
@@ -107,5 +117,21 @@ public class SaetiController {
         source.setAvailable(!source.isAvailable());
 
         setupSeat(source); // Reapply styles
+    }
+
+    public void refreshSeats() {
+        selectedFlight = DataHolder.getFlight();
+        myGridPane.getChildren().clear();
+        myGridPane2.getChildren().clear();
+
+        if (selectedFlight != null) {
+            populateSeatsFromFlight(selectedFlight);
+        } else {
+            welcomeText.setText("No flight selected.");
+        }
+    }
+    @FXML
+    public void onConfirmBookingClick(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.TICKET);
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.verkefni.vidmot.DisplayTicketController"
+            prefWidth="500" prefHeight="400"
+            style="-fx-padding: 20">
+
+    <VBox spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+
+        <Label text="Your Ticket" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        
+        <GridPane hgap="10" vgap="8">
+            <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="firstNameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="lastNameLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Phone:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="phoneLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <HBox spacing="10">
+            <Label text="Flight:"/>
+            <Label fx:id="flightNameLabel" style="-fx-font-weight: bold"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Seat:"/>
+            <Label fx:id="seatLabel"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Extra Baggage (kg):"/>
+            <Label fx:id="baggageLabel"/>
+        </HBox>
+
+        <Button text="Done" onAction="#onDoneClick" maxWidth="Infinity" />
+    </VBox>
+
+</AnchorPane>

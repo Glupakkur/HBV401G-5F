@@ -39,33 +39,27 @@ public class ViewSwitcher {
         }
 
         try {
-            Parent root;
-            // fletta upp í skyndiminni
-            if (cache.containsKey(view)) {
-                System.out.println("Loading from cache");
+            FXMLLoader loader = new FXMLLoader(ViewSwitcher.class.getResource(view.getFileName()));
+            Parent root = loader.load();
 
-                root = cache.get(view);
-                // annars lesa úr .fxml skrá
-            } else {
-                System.out.println("Loading from FXML");
-                // lesa inn .fxml skrána og rótin á viðmótstrénu verður root
-                root = FXMLLoader.load(
-                        ViewSwitcher.class.getResource(view.getFileName())
-                );
-
-                if (view == View.SEATMAP && root instanceof AnchorPane anchorPane) {
-                    double screenHeight = javafx.stage.Screen.getPrimary().getVisualBounds().getHeight();
-                    anchorPane.setPrefHeight(screenHeight * 0.85); // scala hæð gluggans dynamically
-                }
-                // geyma í skyndimynni - tengja saman view og root
-                cache.put(view, root);
+            if (view == View.SEATMAP && root instanceof AnchorPane anchorPane) {
+                double screenHeight = javafx.stage.Screen.getPrimary().getVisualBounds().getHeight();
+                anchorPane.setPrefHeight(screenHeight * 0.85);
             }
 
-            // setja rótina í núverandi senu
             scene.setRoot(root);
+
+
+            if (view == View.SEATMAP) {
+                Object controller = loader.getController();
+                if (controller instanceof SaetiController saetiController) {
+                    saetiController.refreshSeats();
+                }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

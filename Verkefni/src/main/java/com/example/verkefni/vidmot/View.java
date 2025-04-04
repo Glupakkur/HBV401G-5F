@@ -6,7 +6,7 @@ package com.example.verkefni.vidmot;
 public enum View {
     SEATMAP("saeti-view.fxml"),
     VELJAFLUG("VeljaFlugVidmot.fxml"),
-    ABOUT("about.fxml");
+    TICKET("Ticket.fxml");
 
     private String fileName;
 
