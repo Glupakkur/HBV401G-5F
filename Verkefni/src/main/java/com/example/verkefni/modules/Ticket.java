@@ -1,18 +1,14 @@
 package com.example.verkefni.modules;
+
 public class Ticket {
     private String ticketID;
     private Customer ticketHolder;
     private String seatID;
-
-
     private Flight flight;
-
-    public int getExtraBaggage() {
-        return extraBaggage;
-    }
-
     private int extraBaggage;
 
+
+    // general creator
     public Ticket(Customer customer, String seatID, Flight flight, int extraBaggage){
         this.ticketID = (flight.getFlightID()) + seatID;
         this.ticketHolder = customer;
@@ -21,6 +17,14 @@ public class Ticket {
         this.extraBaggage = extraBaggage;
     }
 
+    // creator for database
+    public Ticket(String ticketID, Customer customer, String seatID, Flight flight, int extraBaggage){
+        this.ticketID = ticketID;
+        this.ticketHolder = customer;
+        this.seatID = seatID;
+        this.flight = flight;
+        this.extraBaggage = extraBaggage;
+    }
     public void cancelTicket() {
         this.ticketHolder = null;
         this.seatID = null;
@@ -32,6 +36,9 @@ public class Ticket {
         this.extraBaggage += weight;
     }
 
+    public int getExtraBaggage() {
+        return extraBaggage;
+    }
 
     // Getters
     public String getTicketID() {

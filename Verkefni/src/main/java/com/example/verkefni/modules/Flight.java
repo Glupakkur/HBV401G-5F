@@ -36,8 +36,15 @@ public class Flight {
 
 
     }
+
+    // empty container, useable for testing
     public Flight () {
 
+    }
+
+    // constructor for db handling
+    public Flight(String flightID, String airline, LocalDateTime departureTime, LocalDateTime arrivalTime,
+                  String departureLocation, String arrivalLocation, Seat [] seats, int emptySeatsCount, Ticket[] ticket) {
     }
 
 
