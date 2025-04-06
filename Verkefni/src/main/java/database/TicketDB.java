@@ -66,7 +66,7 @@ public class TicketDB {
                 "(dateOfBirth, sex, nationality, firstName, lastName, phone, email) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);) {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
             conn.setAutoCommit(false);
 
             // Höndla Customer

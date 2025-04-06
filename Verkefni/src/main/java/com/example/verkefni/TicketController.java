@@ -1,7 +1,5 @@
 package com.example.verkefni;
 import database.TicketDB;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import com.example.verkefni.modules.Customer;
 import com.example.verkefni.modules.Flight;
 import com.example.verkefni.modules.Seat;
