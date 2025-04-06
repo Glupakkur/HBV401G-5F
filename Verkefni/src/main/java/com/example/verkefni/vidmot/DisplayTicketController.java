@@ -3,10 +3,11 @@ package com.example.verkefni.vidmot;
 import com.example.verkefni.modules.Customer;
 import com.example.verkefni.modules.Flight;
 import com.example.verkefni.modules.Ticket;
-import javafx.event.ActionEvent;
+import com.example.verkefni.modules.Seat;
+import database.TicketDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
+import java.util.List;
 
 public class DisplayTicketController {
     @FXML private Label firstNameLabel;
@@ -16,14 +17,15 @@ public class DisplayTicketController {
     @FXML private Label seatLabel;
     @FXML private Label baggageLabel;
 
+    public static List<Seat> selectedSeats; // Shared between controller transitions
+
     @FXML
     public void initialize() {
-        Ticket ticket = DataHolder.getSelectedTicket();
+        Ticket baseTicket = DataHolder.getSelectedTicket();
+        if (baseTicket == null) return;
 
-        if (ticket == null) return;
-
-        Customer customer = ticket.getHolder();
-        Flight flight = ticket.getFlight();
+        Customer customer = baseTicket.getHolder();
+        Flight flight = baseTicket.getFlight();
 
         if (customer != null) {
             firstNameLabel.setText(customer.getFirstName());
@@ -32,12 +34,20 @@ public class DisplayTicketController {
         }
 
         if (flight != null) {
-            flightNameLabel.setText(flight.toString());  // uses Flight.toString()
+            flightNameLabel.setText(flight.toString());
         }
 
-        seatLabel.setText(ticket.getSeat() != null ? ticket.getSeat() : "-");
-        baggageLabel.setText(ticket.getFlight() != null ? String.valueOf(ticket.getFlight()) : "0");
-        baggageLabel.setText(String.valueOf(ticket.getExtraBaggage()));
+        StringBuilder seatText = new StringBuilder();
+        if (selectedSeats != null && !selectedSeats.isEmpty()) {
+            for (Seat seat : selectedSeats) {
+                seatText.append(seat.getSeatID()).append(" ");
+            }
+        } else {
+            seatText.append("-");
+        }
+
+        seatLabel.setText(seatText.toString().trim());
+        baggageLabel.setText(String.valueOf(baseTicket.getExtraBaggage()));
     }
 
     @FXML

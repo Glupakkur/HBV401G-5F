@@ -2,6 +2,7 @@ package com.example.verkefni.vidmot;
 
 import com.example.verkefni.modules.Customer;
 import com.example.verkefni.modules.Flight;
+import com.example.verkefni.modules.Ticket;
 import database.FlightDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +35,7 @@ public class VeljaFlugController {
     @FXML
     private void onViewSeatMapClick() {
         Customer customer = new Customer(
-                LocalDate.of(1990, 1, 1),
+                LocalDate.of(1990, 1, 1), // Replace later with real date picker
                 null,
                 null,
                 firstNameField.getText(),
@@ -45,11 +46,13 @@ public class VeljaFlugController {
 
         Flight selected = flugComboBox.getValue();
         if (selected != null) {
-            DataHolder.setCustomer(customer);
+            Ticket ticket = new Ticket(customer, null, selected, 0); // Create base ticket
+            DataHolder.setSelectedTicket(ticket);
             DataHolder.setFlight(selected);
             ViewSwitcher.switchTo(View.SEATMAP);
         }
     }
+
 
     public void initialize() {
         Flight[] flights = flightDB.getAllFlights();

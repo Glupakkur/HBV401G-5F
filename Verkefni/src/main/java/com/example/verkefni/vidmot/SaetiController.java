@@ -135,20 +135,22 @@ public class SaetiController {
     @FXML
     public void onConfirmBookingClick(ActionEvent actionEvent) {
         Flight flight = DataHolder.getFlight();
-        Ticket baseTicket = DataHolder.getSelectedTicket(); // has customer + baggage
+        Ticket baseTicket = DataHolder.getSelectedTicket(); // contains the customer
         TicketDB ticketDB = new TicketDB();
 
         for (Seat seat : selectedSeats) {
             Ticket ticket = new Ticket(
-                    "T" + System.nanoTime(),  // basic unique ID (or use UUID if preferred)
+                    "T" + System.nanoTime(),
                     baseTicket.getHolder(),
                     seat.getSeatID(),
                     flight,
                     baseTicket.getExtraBaggage()
             );
-
             ticketDB.addTicketToDB(ticket);
         }
+
+
+        DisplayTicketController.selectedSeats = new ArrayList<>(selectedSeats);
 
         ViewSwitcher.switchTo(View.TICKET);
     }
