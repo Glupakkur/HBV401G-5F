@@ -24,6 +24,14 @@
     -fx-padding: 0;
 }
 
+.selectedseat {
+    -fx-background-image: url("blue.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 0;
+}
+
 .redseat {
     -fx-background-image: url("red.png");
     -fx-background-repeat: no-repeat;

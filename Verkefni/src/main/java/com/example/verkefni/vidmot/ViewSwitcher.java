@@ -50,12 +50,7 @@ public class ViewSwitcher {
             scene.setRoot(root);
 
 
-            if (view == View.SEATMAP) {
-                Object controller = loader.getController();
-                if (controller instanceof SaetiController saetiController) {
-                    saetiController.refreshSeats();
-                }
-            }
+
 
         } catch (IOException e) {
             e.printStackTrace();

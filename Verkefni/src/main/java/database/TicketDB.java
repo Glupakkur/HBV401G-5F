@@ -59,17 +59,26 @@ public class TicketDB {
         return tickets.toArray(new Ticket[0]);
     }
 
-    public void addTicketToDB(Ticket ticket){
-        checkTables();
+    public void addTicketToDB(Ticket ticket) {
+
         Customer customer = ticket.getHolder();
         String insertCustomerSQL = "INSERT INTO Customers " +
                 "(dateOfBirth, sex, nationality, firstName, lastName, phone, email) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);) {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
             conn.setAutoCommit(false);
 
-            // Höndla Customer
+            String seatTakenQuery = "SELECT COUNT(*) FROM Tickets WHERE seatID = ? AND flightID = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(seatTakenQuery)) {
+                checkStmt.setString(1, ticket.getSeat());
+                checkStmt.setString(2, ticket.getFlight().getFlightID());
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    throw new SQLException("Seat is already taken.");
+                }
+            }
+
             int customerID;
             try (PreparedStatement psCustomer = conn.prepareStatement(insertCustomerSQL, Statement.RETURN_GENERATED_KEYS)) {
                 psCustomer.setDate(1, Date.valueOf(customer.getDateOfBirth()));
@@ -90,17 +99,21 @@ public class TicketDB {
                 }
             }
 
-            // Step 2: Höndla miða
             String insertTicketSQL = "INSERT INTO Tickets (ticketID, customerID, seatID, flightID, extraBaggage) VALUES (?, ?, ?, ?, ?)";
-
             try (PreparedStatement psTicket = conn.prepareStatement(insertTicketSQL)) {
                 psTicket.setString(1, ticket.getTicketID());
                 psTicket.setInt(2, customerID);
                 psTicket.setString(3, ticket.getSeat());
                 psTicket.setString(4, ticket.getFlight().getFlightID());
                 psTicket.setInt(5, ticket.getExtraBaggage());
-
                 psTicket.executeUpdate();
+            }
+
+            String markSeatTakenSQL = "UPDATE Seats SET is_taken = 1 WHERE seat_number = ? AND flight_id = ?";
+            try (PreparedStatement updateStmt = conn.prepareStatement(markSeatTakenSQL)) {
+                updateStmt.setString(1, ticket.getSeat());
+                updateStmt.setString(2, ticket.getFlight().getFlightID());
+                updateStmt.executeUpdate();
             }
 
             conn.commit();
@@ -108,6 +121,7 @@ public class TicketDB {
             e.printStackTrace();
         }
     }
+
 
     private static void checkTables() {
         String createCustomersTableSQL = "CREATE TABLE IF NOT EXISTS Customers ("

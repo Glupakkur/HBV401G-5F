@@ -1,5 +1,7 @@
 package database;
 
+import com.example.verkefni.modules.Seat;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -107,4 +109,35 @@ public class SeatDB {
         }
         return label.toString();
     }
+
+    public ArrayList<Seat> getSeatObjectsForFlight(String flightId) {
+        ArrayList<Seat> seats = new ArrayList<>();
+        String query = "SELECT seat_number, is_taken FROM Seats WHERE flight_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, flightId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String seatId = rs.getString("seat_number");
+                boolean taken = rs.getBoolean("is_taken");
+
+                Seat seat = new Seat(seatId, false); // emergency = false for now
+                seat.setAvailable(!taken);           // inverse logic (DB stores taken)
+
+                seats.add(seat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return seats;
+    }
+
+
+
+
 }

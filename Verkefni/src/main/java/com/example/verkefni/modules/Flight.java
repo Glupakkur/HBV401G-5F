@@ -13,6 +13,7 @@ public class Flight {
     private Seat[] seats;
     private int emptyseatscount;
     private Ticket[] tickets;
+    private int totalSeats;
 
     public Flight(String flightID, String airline, LocalDateTime departureTime, LocalDateTime arrivalTime,
                   String departureLocation, String arrivalLocation, int seatCount) {
@@ -24,6 +25,7 @@ public class Flight {
         this.arrivalLocation = arrivalLocation;
 
         emptyseatscount = seatCount;
+        totalSeats = seatCount;
         tickets = new Ticket[seatCount];
         seats = new Seat[seatCount];
 
@@ -34,31 +36,22 @@ public class Flight {
             }
             letter++;
         }
-
-
     }
 
-    // empty container, useable for testing
     public Flight () {
-
     }
 
-    // constructor for db handling
     public Flight(String flightID, String airline, LocalDateTime departureTime, LocalDateTime arrivalTime,
                   String departureLocation, String arrivalLocation, Seat [] seats, int emptySeatsCount, Ticket[] ticket) {
     }
 
-
     public boolean hasEmptySeat(){
         return emptyseatscount > 0;
     }
-   public void updateSeatCount() {
+    public void updateSeatCount() {
         if (hasEmptySeat()) emptyseatscount--;
         else throw new RuntimeException("Seats are full");
     }
-
-
-
 
     public String getFlightID() { return flightID; }
     public void setFlightID(String flightID) { this.flightID = flightID; }
@@ -77,15 +70,18 @@ public class Flight {
 
     public String getArrivalLocation() { return arrivalLocation; }
     public void setArrivalLocation(String arrivalLocation) { this.arrivalLocation = arrivalLocation; }
+
     public Seat[] getSeats() { return seats; }
     public int getEmptySeatsCount() { return emptyseatscount; }
     public Ticket[] getTickets() { return tickets; }
+    public int getTotalSeats() { return totalSeats; }
+
     public void initTicketsAndSeats(int num) {
         this.tickets = new Ticket[num];
         this.seats = new Seat[num];
         emptyseatscount = num;
+        totalSeats = num;
     }
-
 
     @Override
     public String toString() {
@@ -101,5 +97,4 @@ public class Flight {
                 arrivalTime.format(timeFormat)
         );
     }
-
 }
