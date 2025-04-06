@@ -1,4 +1,5 @@
 package com.example.verkefni;
+import database.TicketDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import com.example.verkefni.modules.Customer;
@@ -7,18 +8,10 @@ import com.example.verkefni.modules.Seat;
 import com.example.verkefni.modules.Ticket;
 
 public class TicketController {
+    private TicketDB ticketDB;
     private static final int TICKET_LIMIT = 20;
     private Ticket[] tickets;
     private int userTicketCount;
-  
-    //TODO: insert correct FXML connectors
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
 
     // List of tickets
     public Ticket[] newTickets() {
@@ -27,7 +20,9 @@ public class TicketController {
 
         return tickets;
     }
-
+    public TicketController(){
+        tickets = newTickets();
+    }
     public Ticket createTicket(Customer customer, Seat seat, Flight flight, int baggage) {
         if (seat.isAvailable()) {
             seat.setAvailable(false);
@@ -65,7 +60,9 @@ public class TicketController {
     public Ticket[] confirmTickets() {
         Ticket[] allTickets = new Ticket[userTicketCount];
         System.arraycopy(tickets, 0, allTickets, 0, userTicketCount);
-
+        for (Ticket allTicket : allTickets) {
+            ticketDB.addTicketToDB(allTicket);
+        }
         return allTickets;
     }
 
