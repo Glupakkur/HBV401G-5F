@@ -1,6 +1,7 @@
 package com.example.verkefni.modules;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Flight {
     private String flightID;
@@ -88,6 +89,17 @@ public class Flight {
 
     @Override
     public String toString() {
-        return departureLocation + " → " + arrivalLocation;
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+
+        return String.format(
+                "%s → %s | %s %s–%s ",
+                departureLocation,
+                arrivalLocation,
+                departureTime.format(dateFormat),
+                departureTime.format(timeFormat),
+                arrivalTime.format(timeFormat)
+        );
     }
+
 }

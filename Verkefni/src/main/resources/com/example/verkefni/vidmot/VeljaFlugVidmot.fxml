@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.verkefni.vidmot.VeljaFlugController"
-            prefWidth="600" prefHeight="400"
-            style="-fx-padding: 20">
+            prefHeight="550.0" prefWidth="700.0">
 
-    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+    <children>
+        <Label layoutX="30.0" layoutY="20.0" text="First Name:" />
+        <TextField fx:id="firstNameField" layoutX="120.0" layoutY="15.0" prefWidth="200.0" />
 
-        <Label text="Book Your Flight" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label layoutX="30.0" layoutY="60.0" text="Last Name:" />
+        <TextField fx:id="lastNameField" layoutX="120.0" layoutY="55.0" prefWidth="200.0" />
 
-        <!-- Customer Info -->
-        <GridPane hgap="10" vgap="12">
-            <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="firstNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label layoutX="30.0" layoutY="100.0" text="Phone:" />
+        <TextField fx:id="phoneField" layoutX="120.0" layoutY="95.0" prefWidth="200.0" />
 
-            <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="lastNameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label layoutX="30.0" layoutY="150.0" text="From:" />
+        <ComboBox fx:id="departureLocationBox" layoutX="120.0" layoutY="145.0" prefWidth="200.0" />
 
-            <Label text="Phone Number:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="phoneField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-        </GridPane>
+        <Label layoutX="30.0" layoutY="190.0" text="To:" />
+        <ComboBox fx:id="arrivalLocationBox" layoutX="120.0" layoutY="185.0" prefWidth="200.0" />
 
-        <!-- Flight selection -->
-        <HBox spacing="10">
-            <Label text="Select Flight:"/>
-            <ComboBox fx:id="flugComboBox" prefWidth="300"/>
-        </HBox>
+        <Label layoutX="30.0" layoutY="230.0" text="Date:" />
+        <DatePicker fx:id="datePicker" layoutX="120.0" layoutY="225.0" prefWidth="200.0" />
 
-        <!-- Button -->
-        <Button text="Pick Seat"
-                onAction="#onViewSeatMapClick"
-                maxWidth="Infinity"
-                style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+        <Button text="Search Flights" layoutX="120.0" layoutY="270.0" onAction="#onSearchFlightsClick" />
 
-    </VBox>
+        <Label layoutX="30.0" layoutY="320.0" text="Select Flight:" />
+        <ComboBox fx:id="flugComboBox" layoutX="120.0" layoutY="315.0" prefWidth="400.0" />
 
+        <Button text="Select Seat" layoutX="120.0" layoutY="370.0" onAction="#onViewSeatMapClick" />
+    </children>
 </AnchorPane>

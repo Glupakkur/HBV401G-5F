@@ -12,9 +12,9 @@ class FlightController {
     }
 
     // Search directly from DB
-    public Flight[] searchFlights(String departure, String arrival) {
+    /*public Flight[] searchFlights(String departure, String arrival) {
         return flightDB.findFlights(departure, arrival);
-    }
+    }*/
 
     // Get all flights from DB (optional)
     public Flight[] getAllFlights() {
