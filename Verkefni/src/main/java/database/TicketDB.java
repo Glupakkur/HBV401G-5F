@@ -90,7 +90,7 @@ public class TicketDB {
                 }
             }
 
-            // Step 2: Höndla miða
+            // Höndla miða
             String insertTicketSQL = "INSERT INTO Tickets (ticketID, customerID, seatID, flightID, extraBaggage) VALUES (?, ?, ?, ?, ?)";
 
             try (PreparedStatement psTicket = conn.prepareStatement(insertTicketSQL)) {

@@ -122,8 +122,8 @@ public class TicketControllerTest {
 
 
         TicketController controller = new TicketController();
-        Ticket ticket1 = controller.createTicket(customer, flight.getSeats()[0], flight, 10);
-        Ticket ticket2 = controller.createTicket(customer, flight.getSeats()[1], flight, 15);
+        controller.createTicket(customer, flight.getSeats()[0], flight, 10);
+        controller.createTicket(customer, flight.getSeats()[1], flight, 15);
 
         // Sækja staðfesta miða
         Ticket[] tickets = controller.confirmTickets();

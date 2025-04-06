@@ -22,6 +22,7 @@ public class TicketController {
     }
     public TicketController(){
         tickets = newTickets();
+        ticketDB = new TicketDB();
     }
     public Ticket createTicket(Customer customer, Seat seat, Flight flight, int baggage) {
         if (seat.isAvailable()) {
@@ -57,13 +58,17 @@ public class TicketController {
     }
 
     // Finalise ticket selection. What else here?
-    public Ticket[] confirmTickets() {
+    public Ticket[] confirmTickets(){
         Ticket[] allTickets = new Ticket[userTicketCount];
         System.arraycopy(tickets, 0, allTickets, 0, userTicketCount);
         for (Ticket allTicket : allTickets) {
             ticketDB.addTicketToDB(allTicket);
         }
         return allTickets;
+    }
+    // Get all tickets from DB (optional)
+    public Ticket[] getAllTickets() {
+        return ticketDB.getAllTickets();
     }
 
     public void newCustomer(Ticket ticket) {
