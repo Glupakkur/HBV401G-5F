@@ -72,11 +72,18 @@ public class VeljaFlugController {
         String to = arrivalLocationBox.getValue();
         LocalDate date = datePicker.getValue();
 
+        Flight[] filtered;
+
         if (from != null && to != null && date != null) {
-            Flight[] filtered = flightDB.findFlights(from, to, date);
-            listOfFlights.setAll(filtered);
-            flugComboBox.setItems(listOfFlights);
+            filtered = flightDB.findFlights(from, to, date);
+        } else if (from != null && to != null) {
+            filtered = flightDB.findFlights(from, to);
+        } else {
+            return;
         }
+
+        listOfFlights.setAll(filtered);
+        flugComboBox.setItems(listOfFlights);
     }
 
     @FXML

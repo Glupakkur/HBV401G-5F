@@ -69,6 +69,38 @@ public class FlightDB {
         return results.toArray(new Flight[0]);
     }
 
+    public Flight[] findFlights(String from, String to) {
+        ArrayList<Flight> results = new ArrayList<>();
+        String query = "SELECT * FROM Flights WHERE departure_location = ? AND arrival_location = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, from);
+            stmt.setString(2, to);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new Flight(
+                        rs.getString("flight_id"),
+                        rs.getString("airline"),
+                        LocalDateTime.parse(rs.getString("departure_time")),
+                        LocalDateTime.parse(rs.getString("arrival_time")),
+                        rs.getString("departure_location"),
+                        rs.getString("arrival_location"),
+                        rs.getInt("total_seats")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results.toArray(new Flight[0]);
+    }
+
+
 
     public String[] getAllDepartureLocations() {
         ArrayList<String> list = new ArrayList<>();
