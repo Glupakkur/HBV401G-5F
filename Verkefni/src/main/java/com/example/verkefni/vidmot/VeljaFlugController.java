@@ -6,6 +6,7 @@ import com.example.verkefni.modules.Ticket;
 import database.FlightDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -78,5 +79,15 @@ public class VeljaFlugController {
         }
     }
 
+    @FXML
+    public void onClearSelectionClick(ActionEvent actionEvent) {
+        Flight[] flights = flightDB.getAllFlights();
+        listOfFlights = FXCollections.observableArrayList(flights);
+        flugComboBox.setItems(listOfFlights);
+        String[] departures = flightDB.getAllDepartureLocations();
+        String[] arrivals = flightDB.getAllArrivalLocations();
 
+        departureLocationBox.setItems(FXCollections.observableArrayList(departures));
+        arrivalLocationBox.setItems(FXCollections.observableArrayList(arrivals));
+    }
 }
