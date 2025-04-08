@@ -19,7 +19,9 @@ public class DisplayTicketController {
     @FXML private Label baggageLabel;
 
     public static List<Seat> selectedSeats;
-
+    /**
+     * Fill into various fields from dataholder class
+     */
     @FXML
     public void initialize() {
         Ticket baseTicket = DataHolder.getSelectedTicket();
@@ -50,7 +52,9 @@ public class DisplayTicketController {
         seatLabel.setText(seatText.toString().trim());
         baggageLabel.setText(String.valueOf(baseTicket.getExtraBaggage()));
     }
-
+    /**
+     * Go back to first view
+     */
     @FXML
     private void onDoneClick() {
         ViewSwitcher.switchTo(View.VELJAFLUG);

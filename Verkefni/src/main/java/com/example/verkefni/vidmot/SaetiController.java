@@ -17,7 +17,7 @@ import java.util.List;
 public class SaetiController {
 
     @FXML
-    private Label welcomeText;
+    private Label hoverOverText;
 
     @FXML
     private GridPane myGridPane;
@@ -31,6 +31,9 @@ public class SaetiController {
 
     private static final int COLUMNS_PER_SIDE = 2;
 
+    /**
+     * Sets up the view with 2 gripanes full of seats
+     */
     @FXML
     public void initialize() {
         myGridPane.setVgap(1);
@@ -45,10 +48,12 @@ public class SaetiController {
         if (selectedFlight != null) {
             populateSeatsFromFlight(selectedFlight);
         } else {
-            welcomeText.setText("No flight selected.");
+            hoverOverText.setText("No flight selected.");
         }
     }
-
+    /**
+     * Takes in a flight as parameter and sets the seats into 2 gripanes
+     */
     private void populateSeatsFromFlight(Flight flight) {
         for (Seat seat : seatDB.getSeatObjectsForFlight(flight.getFlightID())) {
             String id = seat.getSeatID();
@@ -72,7 +77,9 @@ public class SaetiController {
             grid.add(seat, col, row);
         }
     }
-
+    /**
+     * Sets size to seat, sets style to seat, sets methods for interacting with seat.
+     */
     private void setupSeat(Seat seat) {
         seat.setPrefSize(25, 25);
         seat.getStyleClass().removeAll("greenseat", "redseat", "emergencyseat", "selectedseat");
@@ -92,12 +99,17 @@ public class SaetiController {
         seat.setOnMouseEntered(this::tellMe);
         seat.setOnMouseClicked(this::clickseat);
     }
-
+    /**
+     * For the back button, goes back to another view.
+     */
     @FXML
     private void onChooseFlightClick() {
         ViewSwitcher.switchTo(View.VELJAFLUG);
     }
 
+    /**
+     * Hover over seats with mouse tells you what number the seat is and whether it is available
+     */
     @FXML
     public void tellMe(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
@@ -109,9 +121,11 @@ public class SaetiController {
             seatInfo.append(" and is an Emergency Exit");
         }
 
-        welcomeText.setText("Seat number: " + seatInfo);
+        hoverOverText.setText("Seat number: " + seatInfo);
     }
-
+    /**
+     * Seleting and deselecting seats. Does nothing if seat was taken before the screen was loaded.
+     */
     @FXML
     public void clickseat(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
@@ -121,14 +135,16 @@ public class SaetiController {
         if (selectedSeats.contains(source)) {
             selectedSeats.remove(source);
             setupSeat(source);
-            welcomeText.setText("Seat deselected: " + source.getSeatID());
+            hoverOverText.setText("Seat deselected: " + source.getSeatID());
         } else {
             selectedSeats.add(source);
             setupSeat(source);
-            welcomeText.setText("Selected seat: " + source.getSeatID());
+            hoverOverText.setText("Selected seat: " + source.getSeatID());
         }
     }
-
+    /**
+     * For confirmation button set what was selected into database and ready for display on the next screen
+     */
     @FXML
     public void onConfirmBookingClick(ActionEvent actionEvent) {
         Flight flight = DataHolder.getFlight();

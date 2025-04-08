@@ -5,6 +5,9 @@ import com.example.verkefni.modules.Ticket;
 import com.example.verkefni.modules.Customer;
 import com.example.verkefni.modules.Seat;
 
+/**
+ * Class to save various selections made in several classes.
+ */
 public class DataHolder {
     private static Flight selectedFlight;
     private static Ticket selectedTicket;

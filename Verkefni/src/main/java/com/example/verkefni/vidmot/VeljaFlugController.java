@@ -40,6 +40,9 @@ public class VeljaFlugController {
     private final FlightDB flightDB = new FlightDB();
     private ObservableList<Flight> listOfFlights;
 
+    /**
+     * Set up the view with a several comboboxes with all flights, departure locations and arrival location.
+     */
     public void initialize() {
         Flight[] flights = flightDB.getAllFlights();
         listOfFlights = FXCollections.observableArrayList(flights);
@@ -51,7 +54,10 @@ public class VeljaFlugController {
         departureLocationBox.setItems(FXCollections.observableArrayList(departures));
         arrivalLocationBox.setItems(FXCollections.observableArrayList(arrivals));
     }
-
+    /**
+     * Create new customer and get data from textfields, get the flight that was selected
+     * save it in the Dataholder to display on the final screen
+     */
     @FXML
     private void onViewSeatMapClick() {
         Customer customer = new Customer(
@@ -72,7 +78,9 @@ public class VeljaFlugController {
             ViewSwitcher.switchTo(View.SEATMAP);
         }
     }
-
+    /**
+     * Filter the combobox of all flights depending on locations and date selected
+     */
     @FXML
     private void onSearchFlightsClick() {
         String from = departureLocationBox.getValue();
@@ -92,7 +100,9 @@ public class VeljaFlugController {
         listOfFlights.setAll(filtered);
         flugComboBox.setItems(listOfFlights);
     }
-
+    /**
+     * Returns all flight combobox to original state
+     */
     @FXML
     public void onClearSelectionClick(ActionEvent actionEvent) {
         Flight[] flights = flightDB.getAllFlights();
