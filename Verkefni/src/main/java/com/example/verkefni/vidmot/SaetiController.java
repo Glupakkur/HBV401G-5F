@@ -5,12 +5,12 @@ import com.example.verkefni.FlightMock;
 import com.example.verkefni.modules.Seat;
 import com.example.verkefni.modules.Ticket;
 import database.TicketDB;
+import database.SeatDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import database.SeatDB;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,22 +18,40 @@ public class SaetiController {
 
     @FXML
     private Label welcomeText;
+
     @FXML
     private GridPane myGridPane;
+
     @FXML
     private GridPane myGridPane2;
 
     private final SeatDB seatDB = new SeatDB();
-
+    private final List<Seat> selectedSeats = new ArrayList<>();
     private Flight selectedFlight;
 
     private static final int COLUMNS_PER_SIDE = 2;
-    private final List<Seat> selectedSeats = new ArrayList<>();
+
+    @FXML
+    public void initialize() {
+        myGridPane.setVgap(1);
+        myGridPane.setHgap(2);
+        myGridPane2.setVgap(1);
+        myGridPane2.setHgap(2);
+        myGridPane.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
+        myGridPane2.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
+
+        selectedFlight = DataHolder.getFlight();
+
+        if (selectedFlight != null) {
+            populateSeatsFromFlight(selectedFlight);
+        } else {
+            welcomeText.setText("No flight selected.");
+        }
+    }
 
     private void populateSeatsFromFlight(Flight flight) {
         for (Seat seat : seatDB.getSeatObjectsForFlight(flight.getFlightID())) {
             String id = seat.getSeatID();
-
             if (id == null || id.length() < 2) continue;
 
             char rowChar = id.charAt(0);
@@ -55,33 +73,10 @@ public class SaetiController {
         }
     }
 
-    @FXML
-    public void initialize() {
-        myGridPane.setVgap(1);
-        myGridPane.setHgap(2);
-        myGridPane2.setVgap(1);
-        myGridPane2.setHgap(2);
-        myGridPane.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
-        myGridPane2.setPrefSize(COLUMNS_PER_SIDE * 30, 30 * 30);
-
-        Flight mockFlight = new FlightMock(1).getMock()[0];
-        selectedFlight = DataHolder.getFlight();
-        if (selectedFlight != null) {
-            populateSeatsFromFlight(selectedFlight);
-        } else {
-            welcomeText.setText("No flight selected.");
-        }
-    }
-
-    @FXML
-    private void onChooseFlightClick() {
-        ViewSwitcher.switchTo(View.VELJAFLUG);
-    }
-
     private void setupSeat(Seat seat) {
         seat.setPrefSize(25, 25);
-
         seat.getStyleClass().removeAll("greenseat", "redseat", "emergencyseat", "selectedseat");
+
         if (!seat.isAvailable()) {
             seat.getStyleClass().add("redseat");
         } else if (selectedSeats.contains(seat)) {
@@ -99,6 +94,11 @@ public class SaetiController {
     }
 
     @FXML
+    private void onChooseFlightClick() {
+        ViewSwitcher.switchTo(View.VELJAFLUG);
+    }
+
+    @FXML
     public void tellMe(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
         StringBuilder seatInfo = new StringBuilder(source.getSeatID());
@@ -112,12 +112,11 @@ public class SaetiController {
         welcomeText.setText("Seat number: " + seatInfo);
     }
 
+    @FXML
     public void clickseat(MouseEvent mouseEvent) {
         Seat source = (Seat) mouseEvent.getSource();
 
-        if (!source.isAvailable()) {
-            return;
-        }
+        if (!source.isAvailable()) return;
 
         if (selectedSeats.contains(source)) {
             selectedSeats.remove(source);
@@ -130,12 +129,10 @@ public class SaetiController {
         }
     }
 
-
-
     @FXML
     public void onConfirmBookingClick(ActionEvent actionEvent) {
         Flight flight = DataHolder.getFlight();
-        Ticket baseTicket = DataHolder.getSelectedTicket(); // contains the customer
+        Ticket baseTicket = DataHolder.getSelectedTicket();
         TicketDB ticketDB = new TicketDB();
 
         for (Seat seat : selectedSeats) {
@@ -149,11 +146,7 @@ public class SaetiController {
             ticketDB.addTicketToDB(ticket);
         }
 
-
         DisplayTicketController.selectedSeats = new ArrayList<>(selectedSeats);
-
         ViewSwitcher.switchTo(View.TICKET);
     }
-
-
 }

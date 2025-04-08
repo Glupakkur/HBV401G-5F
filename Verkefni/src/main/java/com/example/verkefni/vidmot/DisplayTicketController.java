@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import java.util.List;
 
 public class DisplayTicketController {
+
     @FXML private Label firstNameLabel;
     @FXML private Label lastNameLabel;
     @FXML private Label phoneLabel;
@@ -17,7 +18,7 @@ public class DisplayTicketController {
     @FXML private Label seatLabel;
     @FXML private Label baggageLabel;
 
-    public static List<Seat> selectedSeats; // Shared between controller transitions
+    public static List<Seat> selectedSeats;
 
     @FXML
     public void initialize() {

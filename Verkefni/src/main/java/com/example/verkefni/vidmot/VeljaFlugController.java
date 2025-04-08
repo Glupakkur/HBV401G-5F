@@ -15,28 +15,47 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 
 public class VeljaFlugController {
-    @FXML
-    public TextField firstNameField;
-    @FXML
-    public TextField lastNameField;
-    @FXML
-    public TextField phoneField;
 
-    @FXML private ComboBox<String> departureLocationBox;
-    @FXML private ComboBox<String> arrivalLocationBox;
-    @FXML private DatePicker datePicker;
+    @FXML
+    private TextField firstNameField;
 
+    @FXML
+    private TextField lastNameField;
+
+    @FXML
+    private TextField phoneField;
+
+    @FXML
+    private ComboBox<String> departureLocationBox;
+
+    @FXML
+    private ComboBox<String> arrivalLocationBox;
+
+    @FXML
+    private DatePicker datePicker;
 
     @FXML
     private ComboBox<Flight> flugComboBox;
 
-    private ObservableList<Flight> listOfFlights;
     private final FlightDB flightDB = new FlightDB();
+    private ObservableList<Flight> listOfFlights;
+
+    public void initialize() {
+        Flight[] flights = flightDB.getAllFlights();
+        listOfFlights = FXCollections.observableArrayList(flights);
+        flugComboBox.setItems(listOfFlights);
+
+        String[] departures = flightDB.getAllDepartureLocations();
+        String[] arrivals = flightDB.getAllArrivalLocations();
+
+        departureLocationBox.setItems(FXCollections.observableArrayList(departures));
+        arrivalLocationBox.setItems(FXCollections.observableArrayList(arrivals));
+    }
 
     @FXML
     private void onViewSeatMapClick() {
         Customer customer = new Customer(
-                LocalDate.of(1990, 1, 1), // Replace later with real date picker
+                LocalDate.of(1990, 1, 1),
                 null,
                 null,
                 firstNameField.getText(),
@@ -47,23 +66,11 @@ public class VeljaFlugController {
 
         Flight selected = flugComboBox.getValue();
         if (selected != null) {
-            Ticket ticket = new Ticket(customer, null, selected, 0); // Create base ticket
+            Ticket ticket = new Ticket(customer, null, selected, 0);
             DataHolder.setSelectedTicket(ticket);
             DataHolder.setFlight(selected);
             ViewSwitcher.switchTo(View.SEATMAP);
         }
-    }
-
-
-    public void initialize() {
-        Flight[] flights = flightDB.getAllFlights();
-        listOfFlights = FXCollections.observableArrayList(flights);
-        flugComboBox.setItems(listOfFlights);
-        String[] departures = flightDB.getAllDepartureLocations();
-        String[] arrivals = flightDB.getAllArrivalLocations();
-
-        departureLocationBox.setItems(FXCollections.observableArrayList(departures));
-        arrivalLocationBox.setItems(FXCollections.observableArrayList(arrivals));
     }
 
     @FXML
@@ -91,6 +98,7 @@ public class VeljaFlugController {
         Flight[] flights = flightDB.getAllFlights();
         listOfFlights = FXCollections.observableArrayList(flights);
         flugComboBox.setItems(listOfFlights);
+
         String[] departures = flightDB.getAllDepartureLocations();
         String[] arrivals = flightDB.getAllArrivalLocations();
 
