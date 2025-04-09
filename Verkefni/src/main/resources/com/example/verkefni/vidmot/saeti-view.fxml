@@ -40,7 +40,7 @@
         </content>
     </ScrollPane>
 
-    <Label fx:id="welcomeText" alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0" />
+    <Label fx:id="hoverOverText" alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0" />
 
     <Button text="Back"
             layoutX="20" layoutY="60"
